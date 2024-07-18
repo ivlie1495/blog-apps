@@ -9,13 +9,13 @@
 		{
 			"id": 2,
 			"title": "nextjs-blog-starter",
-			"description": "A blog starter for Next.js",
+			"description": "A blog starter for Next.js with TypeScript and Tailwind CSS",
 			"stargazers_count": 10
 		},
 		{
 			"id": 3,
 			"title": "nextjs-blog-starter",
-			"description": "A blog starter for Next.js",
+			"description": "A blog starter for Next.js with TypeScript and Tailwind CSS and MDX",
 			"stargazers_count": 10
 		}
 	]
