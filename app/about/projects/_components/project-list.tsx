@@ -1,3 +1,5 @@
+import { Star } from 'lucide-react'
+
 import {
 	Card,
 	CardContent,
@@ -5,7 +7,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card'
-import { Star } from 'lucide-react'
 
 const getData = async () => {
 	// await new Promise((resolve) => setTimeout(resolve, 3000))
