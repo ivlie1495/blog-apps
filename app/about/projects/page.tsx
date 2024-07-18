@@ -9,7 +9,7 @@ import ProjectListLoading from './_components/project-list-loading'
 const Page = async () => {
 	return (
 		<div>
-			<h1 className="mb-8 text-xl">Projects</h1>
+			<h1 className="mb-8 text-2xl font-semibold">Projects</h1>
 			<div className="mb-8">Hello, this is a project list page.</div>
 			<ErrorBoundary FallbackComponent={FallbackError}>
 				<Suspense fallback={<ProjectListLoading />}>

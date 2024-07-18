@@ -23,6 +23,11 @@ const Navigation = () => {
 						<Link href="/about/projects">Projects</Link>
 					</Button>
 				</li>
+				<li>
+					<Button asChild variant="link" className={buttonLinkClass}>
+						<Link href="/photos">Photos</Link>
+					</Button>
+				</li>
 			</ul>
 		</nav>
 	)
