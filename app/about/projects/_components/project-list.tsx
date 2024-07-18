@@ -9,8 +9,6 @@ import {
 } from '@/components/ui/card'
 
 const getData = async () => {
-	// await new Promise((resolve) => setTimeout(resolve, 3000))
-
 	return (
 		await fetch('http://localhost:3001/repos', { cache: 'no-store' })
 	).json()
