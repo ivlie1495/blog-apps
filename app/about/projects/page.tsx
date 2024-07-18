@@ -1,26 +1,16 @@
-const getData = async () => {
-	await new Promise((resolve) => setTimeout(resolve, 3000))
+import { Suspense } from 'react'
 
-	return (
-		await fetch('http://localhost:3001/repos', { cache: 'no-store' })
-	).json()
-}
+import ProjectList from './_components/project-list'
+import ProjectListLoading from './_components/project-list-loading'
 
 const Page = async () => {
-	const data = await getData()
-
 	return (
 		<div className="p-20">
 			<h1 className="mb-8 text-xl">Projects</h1>
-			<ul>
-				{data.map((repo: any) => (
-					<li key={repo.id} className="mb-4">
-						<div>{repo.title}</div>
-						<div>{repo.description}</div>
-						<div>{repo.stargazers_count}</div>
-					</li>
-				))}
-			</ul>
+			<div className="mb-8">Hello, this is a project list page.</div>
+			<Suspense fallback={<ProjectListLoading />}>
+				<ProjectList />
+			</Suspense>
 		</div>
 	)
 }
