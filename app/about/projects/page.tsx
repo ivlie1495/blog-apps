@@ -1,5 +1,7 @@
 const getData = async () => {
-	return (await fetch('http://localhost:3001/repos')).json()
+	return (
+		await fetch('http://localhost:3001/repos', { cache: 'no-store' })
+	).json()
 }
 
 const Page = async () => {
