@@ -1,19 +1,19 @@
 import Link from 'next/link'
 
+import Navigation from '@/components/navigation'
+
 const Header = () => {
 	return (
-		<header className="border border-yellow-400 p-20">
-			<ul className="flex space-x-4">
-				<li>
-					<Link href="/">Home</Link>
-				</li>
-				<li>
-					<Link href="/about">About</Link>
-				</li>
-				<li>
-					<Link href="/about/projects">Projects</Link>
-				</li>
-			</ul>
+		<header className="mt-4 flex justify-between md:items-center">
+			<div className="flex items-center md:space-x-12">
+				<div className="hidden md:block">
+					<Link href="/" className="text-2xl">
+						Ivan Lie
+					</Link>
+				</div>
+				<Navigation />
+			</div>
+			<div>Dark Toggle</div>
 		</header>
 	)
 }
