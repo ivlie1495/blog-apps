@@ -1,8 +1,21 @@
+import { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
 
 interface Props {
 	params: {
 		slug: string
+	}
+}
+
+export const generateMetadata = async (
+	{ params }: Props,
+	parent: ResolvingMetadata,
+) => {
+	const description = (await parent).description ?? 'Default description'
+
+	return {
+		title: params.slug,
+		description,
 	}
 }
 
