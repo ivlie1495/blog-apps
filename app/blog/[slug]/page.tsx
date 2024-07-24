@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation'
-import { Suspense } from 'react'
+import { cache } from 'react'
 
-import { getPost } from '@/libs/posts'
+import { getPost as getPostFromLib } from '@/libs/posts'
+
+const getPost = cache(async (slug: string) => await getPostFromLib(slug))
 
 interface Props {
 	params: {
@@ -12,23 +14,21 @@ interface Props {
 export const generateMetadata = async ({ params }: Props) => {
 	const post = await getPost(`${params.slug}.mdx`)
 
+	if (!post) {
+		return null
+	}
+
 	return post.frontmatter
 }
 
 const Page = async ({ params }: Props) => {
-	let post
+	const post = await getPost(`${params.slug}.mdx`)
 
-	try {
-		post = await getPost(`${params.slug}.mdx`)
-	} catch (error) {
-		return notFound()
+	if (!post) {
+		notFound()
 	}
 
-	return (
-		<Suspense fallback={<div>Loading...</div>}>
-			<article className="prose dark:prose-invert">{post.content}</article>
-		</Suspense>
-	)
+	return <article className="prose dark:prose-invert">{post.content}</article>
 }
 
 export default Page

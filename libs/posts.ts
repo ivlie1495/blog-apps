@@ -12,14 +12,37 @@ export const loadPost = (file: string) => {
 }
 
 export const getPost = async (file: string) => {
-	const markdown = loadPost(file)
+	try {
+		const markdown = loadPost(file)
 
-	const mdxSource = await compileMDX({
-		source: markdown,
-		options: {
-			parseFrontmatter: true,
-		},
-	})
+		const mdxSource = await compileMDX({
+			source: markdown,
+			options: {
+				parseFrontmatter: true,
+			},
+		})
 
-	return mdxSource
+		return mdxSource
+	} catch (error) {
+		return null
+	}
+}
+
+export const getAllPosts = async () => {
+	const files = fs.readdirSync(path.join(process.cwd(), 'contents'))
+	const posts = await Promise.all(
+		files.map(async (file) => {
+			const post = await getPost(file)
+
+			if (!post) {
+				return null
+			}
+
+			const { frontmatter } = post
+
+			return { frontmatter, slug: file.replace('.mdx', '') }
+		}),
+	)
+
+	return posts
 }
