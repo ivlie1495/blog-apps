@@ -1,9 +1,7 @@
-import { ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
-import { MDXRemote } from 'next-mdx-remote/rsc'
 import { Suspense } from 'react'
-import fs from 'fs'
-import path from 'path'
+
+import { getPost } from '@/libs/posts'
 
 interface Props {
 	params: {
@@ -11,33 +9,24 @@ interface Props {
 	}
 }
 
-export const generateMetadata = async (
-	{ params }: Props,
-	parent: ResolvingMetadata,
-) => {
-	const description = (await parent).description ?? 'Default description'
+export const generateMetadata = async ({ params }: Props) => {
+	const post = await getPost(`${params.slug}.mdx`)
 
-	return {
-		title: params.slug,
-		description,
-	}
+	return post.frontmatter
 }
 
-const Page = ({ params }: Props) => {
-	if (params.slug !== 'test') {
-		notFound()
-	}
+const Page = async ({ params }: Props) => {
+	let post
 
-	const markdown = fs.readFileSync(
-		path.join(process.cwd(), 'contents', 'first.mdx'),
-		'utf-8',
-	)
+	try {
+		post = await getPost(`${params.slug}.mdx`)
+	} catch (error) {
+		return notFound()
+	}
 
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
-			<article className="prose dark:prose-invert">
-				<MDXRemote source={markdown} />
-			</article>
+			<article className="prose dark:prose-invert">{post.content}</article>
 		</Suspense>
 	)
 }

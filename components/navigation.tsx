@@ -10,11 +10,6 @@ const Navigation = () => {
 			<ul className="flex flex-col md:flex-row md:space-x-4">
 				<li>
 					<Button asChild variant="link" className={buttonLinkClass}>
-						<Link href="/">Home</Link>
-					</Button>
-				</li>
-				<li>
-					<Button asChild variant="link" className={buttonLinkClass}>
 						<Link href="/about">About</Link>
 					</Button>
 				</li>
@@ -26,6 +21,11 @@ const Navigation = () => {
 				<li>
 					<Button asChild variant="link" className={buttonLinkClass}>
 						<Link href="/photos">Photos</Link>
+					</Button>
+				</li>
+				<li>
+					<Button asChild variant="link" className={buttonLinkClass}>
+						<Link href="/blog">Blog</Link>
 					</Button>
 				</li>
 			</ul>
