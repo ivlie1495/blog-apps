@@ -1,5 +1,9 @@
-import { Metadata, ResolvingMetadata } from 'next'
+import { ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
+import { MDXRemote } from 'next-mdx-remote/rsc'
+import { Suspense } from 'react'
+import fs from 'fs'
+import path from 'path'
 
 interface Props {
 	params: {
@@ -24,7 +28,18 @@ const Page = ({ params }: Props) => {
 		notFound()
 	}
 
-	return <div>Hello, {params.slug}!</div>
+	const markdown = fs.readFileSync(
+		path.join(process.cwd(), 'contents', 'first.mdx'),
+		'utf-8',
+	)
+
+	return (
+		<Suspense fallback={<div>Loading...</div>}>
+			<article className="prose dark:prose-invert">
+				<MDXRemote source={markdown} />
+			</article>
+		</Suspense>
+	)
 }
 
 export default Page
