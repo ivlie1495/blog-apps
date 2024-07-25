@@ -2,6 +2,12 @@ import fs from 'fs'
 import path from 'path'
 import { compileMDX } from 'next-mdx-remote/rsc'
 
+export interface FrontmatterPost {
+	title: string
+	date: string
+	tags: string[]
+}
+
 export const loadPost = (file: string) => {
 	const markdown = fs.readFileSync(
 		path.join(process.cwd(), 'contents', file),
@@ -28,7 +34,19 @@ export const getPost = async (file: string) => {
 	}
 }
 
-export const getAllPosts = async () => {
+interface GetAllPostsOptions {
+	sortByDate?: boolean
+	page?: number
+	limit?: number
+	tags?: string[]
+}
+
+export const getAllPosts = async ({
+	sortByDate = false,
+	page = 1,
+	limit = 10,
+	tags,
+}: GetAllPostsOptions) => {
 	const files = fs.readdirSync(path.join(process.cwd(), 'contents'))
 	const posts = await Promise.all(
 		files.map(async (file) => {
@@ -40,9 +58,19 @@ export const getAllPosts = async () => {
 
 			const { frontmatter } = post
 
-			return { frontmatter, slug: file.replace('.mdx', '') }
+			return {
+				frontmatter: frontmatter as unknown as FrontmatterPost,
+				slug: file.replace('.mdx', ''),
+			}
 		}),
 	)
+	let filteredPosts = posts.filter((post) => post !== null)
 
-	return posts
+	if (tags) {
+		filteredPosts = filteredPosts.filter((post) =>
+			post.frontmatter.tags?.some((tag) => tags.includes(tag)),
+		)
+	}
+
+	return filteredPosts
 }
