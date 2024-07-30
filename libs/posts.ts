@@ -35,14 +35,14 @@ export const getPost = async (file: string) => {
 }
 
 interface GetAllPostsOptions {
-	sortByDate?: boolean
+	newest?: boolean
 	page?: number
 	limit?: number
 	tags?: string[]
 }
 
 export const getAllPosts = async ({
-	sortByDate = false,
+	newest = true,
 	page = 1,
 	limit = 10,
 	tags,
@@ -71,6 +71,16 @@ export const getAllPosts = async ({
 			post.frontmatter.tags?.some((tag) => tags.includes(tag)),
 		)
 	}
+	filteredPosts = filteredPosts.sort((a, b) => {
+		const dateA = new Date(a.frontmatter.date)
+		const dateB = new Date(b.frontmatter.date)
+
+		if (newest) {
+			return dateB.getTime() - dateA.getTime()
+		}
+
+		return dateA.getTime() - dateB.getTime()
+	})
 
 	return filteredPosts
 }
