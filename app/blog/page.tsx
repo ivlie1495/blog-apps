@@ -19,8 +19,6 @@ const Pages = async ({ searchParams }: Props) => {
 	const page = Number(searchParams.page ?? 1)
 	const limit = Number(searchParams.limit ?? 3)
 
-	const params = new URLSearchParams(searchParams)
-
 	const data = await getAllPosts({
 		tags,
 		newest: order === 'newest',
