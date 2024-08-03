@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import Pagination from '@/components/pagination'
 import { getAllPosts } from '@/libs/posts'
 
 interface Props {
@@ -8,13 +9,24 @@ interface Props {
 		tags?: string
 		newest?: string
 		order?: string
+		limit?: string
 	}
 }
 
 const Pages = async ({ searchParams }: Props) => {
 	const tags = searchParams.tags?.split(',')
 	const order = searchParams.order ?? 'newest'
-	const posts = await getAllPosts({ tags, newest: order === 'newest' })
+	const page = Number(searchParams.page ?? 1)
+	const limit = Number(searchParams.limit ?? 3)
+
+	const params = new URLSearchParams(searchParams)
+
+	const data = await getAllPosts({
+		tags,
+		newest: order === 'newest',
+		page,
+		limit,
+	})
 
 	return (
 		<div>
@@ -36,7 +48,7 @@ const Pages = async ({ searchParams }: Props) => {
 				)}
 			</div>
 			<ul className="grid grid-cols-1 gap-8 md:grid-cols-2">
-				{posts.map(({ frontmatter, slug }) => (
+				{data.posts.map(({ frontmatter, slug }) => (
 					<li key={slug}>
 						<Link href={`/blog/${slug}`} className="text-2xl font-semibold">
 							{frontmatter.title as string}
@@ -45,6 +57,9 @@ const Pages = async ({ searchParams }: Props) => {
 					</li>
 				))}
 			</ul>
+			<div className="mt-8">
+				<Pagination pageCount={data.pageCount} />
+			</div>
 		</div>
 	)
 }

@@ -44,7 +44,7 @@ interface GetAllPostsOptions {
 export const getAllPosts = async ({
 	newest = true,
 	page = 1,
-	limit = 10,
+	limit = 3,
 	tags,
 }: GetAllPostsOptions) => {
 	const files = fs.readdirSync(path.join(process.cwd(), 'contents'))
@@ -71,6 +71,7 @@ export const getAllPosts = async ({
 			post.frontmatter.tags?.some((tag) => tags.includes(tag)),
 		)
 	}
+
 	filteredPosts = filteredPosts.sort((a, b) => {
 		const dateA = new Date(a.frontmatter.date)
 		const dateB = new Date(b.frontmatter.date)
@@ -82,5 +83,11 @@ export const getAllPosts = async ({
 		return dateA.getTime() - dateB.getTime()
 	})
 
-	return filteredPosts
+	const startIndex = (page - 1) * limit
+	const endIndex = page * limit
+
+	return {
+		posts: filteredPosts.slice(startIndex, endIndex),
+		pageCount: Math.ceil(filteredPosts.length / limit),
+	}
 }
