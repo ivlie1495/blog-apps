@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import H1 from '@/components/h1'
 import Pagination from '@/components/pagination'
 import { getAllPosts } from '@/libs/posts'
 
@@ -28,7 +29,7 @@ const Pages = async ({ searchParams }: Props) => {
 
 	return (
 		<div>
-			<h1 className="mb-8 text-2xl font-semibold">Blog</h1>
+			<H1>Recent Posts</H1>
 			<div className="mb-8 text-lg text-gray-600">
 				Stay up to date with my latest blog posts.
 			</div>

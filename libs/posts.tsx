@@ -2,6 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import { compileMDX } from 'next-mdx-remote/rsc'
 
+import H1 from '@/components/h1'
+
 export interface FrontmatterPost {
 	title: string
 	date: string
@@ -23,6 +25,9 @@ export const getPost = async (file: string) => {
 
 		const mdxSource = await compileMDX({
 			source: markdown,
+			components: {
+				h1: (props) => <H1 {...props}>{props.children}</H1>,
+			},
 			options: {
 				parseFrontmatter: true,
 			},

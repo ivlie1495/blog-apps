@@ -1,6 +1,8 @@
 import { Metadata } from 'next'
 import Image from 'next/image'
 
+import H1 from '@/components/h1'
+
 import image1 from '@/public/images/image1.jpg'
 import image2 from '@/public/images/image2.jpg'
 import image3 from '@/public/images/image3.jpg'
@@ -13,7 +15,7 @@ export const metadata: Metadata = {
 const Page = () => {
 	return (
 		<div>
-			<h1 className="mb-8 text-2xl font-semibold">My Photos</h1>
+			<H1>My Photos</H1>
 			<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 				<div className="relative h-60 overflow-hidden">
 					<Image
