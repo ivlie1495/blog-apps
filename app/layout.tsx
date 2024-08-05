@@ -23,7 +23,12 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={roboto.className}>
-				<ThemeProvider attribute="class" defaultTheme="system">
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="system"
+					enableSystem
+					disableTransitionOnChange
+				>
 					<Header />
 					<main className="mt-12">{children}</main>
 				</ThemeProvider>
