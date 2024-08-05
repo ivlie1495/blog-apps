@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 import Header from '@/components/header'
+import { ThemeProvider } from '@/components/theme-provider'
 
 import { roboto } from './fonts'
 
@@ -20,10 +21,12 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<body className={roboto.className}>
-				<Header />
-				<main className="mt-12">{children}</main>
+				<ThemeProvider attribute="class" defaultTheme="system">
+					<Header />
+					<main className="mt-12">{children}</main>
+				</ThemeProvider>
 			</body>
 		</html>
 	)
