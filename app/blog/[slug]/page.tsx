@@ -1,8 +1,8 @@
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
 
 import { getPost as getPostFromLib } from '@/libs/posts'
-import Link from 'next/link'
 
 const getPost = cache(async (slug: string) => await getPostFromLib(slug))
 
