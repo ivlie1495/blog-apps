@@ -11,13 +11,9 @@ const ThemeButton = () => {
 	const { theme, systemTheme, setTheme } = useTheme()
 	const currentTheme = theme === 'system' ? systemTheme : theme
 
-	const handleThemeChange = (theme: string) => {
-		setTheme(theme)
-	}
+	const handleThemeChange = (theme: string) => setTheme(theme)
 
-	useEffect(() => {
-		setMounted(true)
-	}, [])
+	useEffect(() => setMounted(true), [])
 
 	if (!mounted) {
 		return null
